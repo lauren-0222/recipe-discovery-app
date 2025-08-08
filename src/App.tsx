@@ -1,33 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [categories, setCategories] = useState([])
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories")
+      }
+      const data = await response.json();
+      setCategories(data.categories)
 
+    }
+    catch (error) {
+      if (error instanceof Error) {
+        console.error("Message:", error.message)
+      } else {
+        console.error("Unknown error:", Error)
+      }
+    }
+    finally {
+      console.log('In the finally')
+    }
+  }
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+console.log("Categories:", categories)
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
