@@ -1,38 +1,22 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Category from "./pages/Category";
+import RecipeDetail from "./pages/ReceipeDetail.tsx";
+import Favorites from "./pages/Favorites";
+import Search from "./pages/Search";
 
-function App() {
-  const [categories, setCategories] = useState([])
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
-      if (!response.ok) {
-        throw new Error("Failed to fetch categories")
-      }
-      const data = await response.json();
-      setCategories(data.categories)
-
-    }
-    catch (error) {
-      if (error instanceof Error) {
-        console.error("Message:", error.message)
-      } else {
-        console.error("Unknown error:", Error)
-      }
-    }
-    finally {
-      console.log('In the finally')
-    }
-  }
-  useEffect(() => {
-    fetchCategories()
-  }, [])
-console.log("Categories:", categories)
+export default function App() {
   return (
-    <>
-
-    </>
-  )
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/category/:categoryName" element={<Category />} />
+        <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/search" element={<Search />} />
+      </Routes>
+    </div>
+  );
 }
-
-export default App
