@@ -1,4 +1,5 @@
 # Recipe Discovery App
+Your site is live at https://lauren-0222.github.io/recipe-discovery-app/
 
 ## Description
 The **Recipe Discovery App** is a React + TypeScript single-page application that uses the [TheMealDB API](https://www.themealdb.com/) to allow users to explore and save recipes.  
